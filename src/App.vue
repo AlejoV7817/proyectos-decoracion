@@ -4,6 +4,8 @@ import { computed, ref } from 'vue'
 
 const phone = '5214642217051'
 
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`
+
 const whatsappBase = `https://wa.me/${phone}`
 
 const messageFor = (product) =>
@@ -430,7 +432,7 @@ const closeImage = () => {
 
       <a class="brand" href="#inicio" aria-label="Proyectos Modernos en Decoración, inicio" @click="menuOpen = false">
 
-        <img class="brand-logo" src="/images/logop-negro-dorado.png" alt="Proyectos Modernos en Decoración" />
+        <img class="brand-logo" :src="assetUrl('/images/logop-negro-dorado.png')" alt="Proyectos Modernos en Decoración" />
 
         <span class="brand-name">
 
@@ -560,7 +562,7 @@ const closeImage = () => {
 
             <div class="category-image">
 
-              <img :src="category.image" :alt="category.name" loading="lazy" />
+              <img :src="assetUrl(category.image)" :alt="category.name" loading="lazy" />
 
             </div>
 
@@ -660,7 +662,7 @@ const closeImage = () => {
 
           <article v-for="finish in finishes" :key="finish.name" class="project-card">
 
-            <img :src="finish.image" :alt="finish.name" loading="lazy" />
+            <img :src="assetUrl(finish.image)" :alt="finish.name" loading="lazy" />
 
             <div class="project-caption">
 
@@ -828,7 +830,7 @@ const closeImage = () => {
 
       <a class="footer-brand" href="#inicio">
 
-        <img class="footer-logo" src="/images/logop-negro-dorado.png" alt="" />
+        <img class="footer-logo" :src="assetUrl('/images/logop-negro-dorado.png')" alt="" />
 
         <span>Proyectos Modernos en Decoración</span>
 
@@ -886,7 +888,7 @@ const closeImage = () => {
 
             >
 
-              <img :src="image" :alt="`${selectedGallery.name} ${index + 1}`" />
+              <img :src="assetUrl(image)" :alt="`${selectedGallery.name} ${index + 1}`" />
 
             </button>
 
@@ -912,7 +914,7 @@ const closeImage = () => {
 
         <button class="modal-close image-viewer-close" type="button" aria-label="Cerrar imagen" @click="closeImage">×</button>
 
-        <img :src="selectedImage" alt="Imagen ampliada" />
+        <img :src="assetUrl(selectedImage)" alt="Imagen ampliada" />
 
       </div>
 
