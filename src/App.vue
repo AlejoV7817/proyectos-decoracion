@@ -1,6 +1,5 @@
 <script setup>
-
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 const phone = '5214642217051'
 
@@ -395,32 +394,61 @@ const selectedGallery = ref(null)
 const selectedImage = ref(null)
 
 const openGallery = (item) => {
-
   selectedGallery.value = item
-
   selectedImage.value = null
 
+  window.history.pushState(
+    { ...(window.history.state || {}), pmdOverlay: 'gallery' },
+    ''
+  )
 }
 
 const closeGallery = () => {
+  if (!selectedGallery.value) return
 
-  selectedGallery.value = null
-
-  selectedImage.value = null
-
+  if (window.history.state?.pmdOverlay === 'gallery') {
+    window.history.back()
+  } else {
+    selectedGallery.value = null
+    selectedImage.value = null
+  }
 }
 
 const openImage = (image) => {
-
   selectedImage.value = image
 
+  window.history.pushState(
+    { ...(window.history.state || {}), pmdOverlay: 'image' },
+    ''
+  )
 }
 
 const closeImage = () => {
+  if (!selectedImage.value) return
 
-  selectedImage.value = null
-
+  if (window.history.state?.pmdOverlay === 'image') {
+    window.history.back()
+  } else {
+    selectedImage.value = null
+  }
 }
+
+const handlePopState = () => {
+  if (selectedImage.value) {
+    selectedImage.value = null
+  } else if (selectedGallery.value) {
+    selectedGallery.value = null
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('popstate', handlePopState)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('popstate', handlePopState)
+})
+
 
 </script>
 
